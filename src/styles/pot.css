@@ -1,0 +1,118 @@
+/* The corner pot: a plant that grows with the line and blooms when it's finished. */
+
+.pot {
+  position: fixed;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(10px, env(safe-area-inset-bottom));
+  z-index: 3;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 14px 10px 4px;
+  pointer-events: none;
+  background: radial-gradient(closest-side, var(--paper) 70%, transparent);
+  opacity: 0;
+  translate: 0 12px;
+  transition:
+    opacity 0.5s var(--ease-out),
+    translate 0.7s var(--ease-spring);
+
+  &.is-shown {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.pot-art {
+  display: block;
+  width: 48px;
+  height: 72px;
+}
+
+.pot-stem,
+.pot-clay,
+.pot-blade,
+.pot-petals {
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The stem draws itself like the main line does, as far as the pen has got. */
+.pot-stem {
+  fill: none;
+  stroke-width: 1.8;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--grow, 0));
+}
+
+.pot-clay {
+  fill: var(--paper);
+  stroke-width: 1.8;
+}
+
+.pot-leaf {
+  scale: 0;
+  transition: scale 0.6s var(--ease-spring);
+
+  &.is-out {
+    scale: 1;
+  }
+}
+
+.pot-blade {
+  fill: var(--paper);
+  stroke-width: 1.5;
+}
+
+.pot-bloom {
+  scale: 0;
+  transition: scale 0.8s var(--ease-spring);
+
+  .pot.is-bloom & {
+    scale: 1;
+  }
+}
+
+.pot-petals {
+  fill: var(--paper);
+  stroke-width: 1.4;
+}
+
+.pot-heart {
+  fill: var(--gold);
+}
+
+.pot-count {
+  font: 400 11px / 1 var(--mono);
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  /* Room under the footer, so the pot never sits on top of it. */
+  body {
+    padding-bottom: 84px;
+  }
+
+  .pot {
+    padding-inline: 6px;
+  }
+
+  .pot-art {
+    width: 38px;
+    height: 57px;
+  }
+
+  .pot-count {
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pot,
+  .pot-leaf,
+  .pot-bloom {
+    transition: none;
+  }
+}

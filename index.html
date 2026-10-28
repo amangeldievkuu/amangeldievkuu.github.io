@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>%SITE_NAME% — %SITE_TAGLINE%</title>
+    <meta name="description" content="%SITE_DESCRIPTION%" />
+    <meta property="og:title" content="%SITE_NAME% — %SITE_TAGLINE%" />
+    <meta property="og:description" content="%SITE_DESCRIPTION%" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafaf7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121212" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Inter:opsz,wght@14..32,400..600&display=swap" />
+    <script>try{const t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch{}</script>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <a class="skip" href="#about">Skip to content</a>
+    <header class="top">
+      <a class="mark" href="/" aria-label="%SITE_NAME%, home">%SITE_NAME%<span>.</span></a>
+      <nav aria-label="Sections">
+        <a href="#writing">writing</a>
+        <a href="#projects">projects</a>
+        <a href="#github">github</a>
+        <a href="#elsewhere">elsewhere</a>
+      </nav>
+    </header>
+
+    <main><!--site:main--></main>
+
+    <div class="ink" aria-hidden="true">
+      <svg class="ink-svg"><path class="ink-line" /><circle class="ink-end" r="3.5" /></svg>
+      <div class="walker">
+        <button class="walker-body" type="button" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 30 30">
+            <g class="walker-legs"><path class="leg leg-a" d="M12 22 11 29" /><path class="leg leg-b" d="M18 22 19 29" /></g>
+            <g class="walker-blob">
+              <path class="walker-hair" d="M15 6c-1-3 1-5 3-5" />
+              <path class="walker-fill" d="M15 5.5c5.6 0 9 3.6 9 8.4 0 5-3.6 8.6-9 8.6s-9-3.4-9-8.4c0-5 3.6-8.6 9-8.6Z" />
+              <g class="walker-eyes"><circle cx="17.5" cy="12.5" r="1.3" /><circle cx="21.5" cy="12.5" r="1.3" /></g>
+            </g>
+          </svg>
+        </button>
+        <p class="walker-says"></p>
+      </div>
+    </div>
+
+    <div class="pot" aria-hidden="true">
+      <svg class="pot-art" viewBox="0 0 48 72">
+        <path class="pot-stem" pathLength="1" d="M24 50c-2-8 2-14 0-21s-2-14 0-21" />
+        <g class="pot-leaf" style="transform-origin: 24px 44px"><path class="pot-blade" d="M24 44q4.5-5.5 10-3.5q-4.5 4-10 3.5Z" /></g>
+        <g class="pot-leaf" style="transform-origin: 24px 38px"><path class="pot-blade" d="M24 38q-4.2-5.2-9.4-3.3q4.2 3.8 9.4 3.3Z" /></g>
+        <g class="pot-leaf" style="transform-origin: 24px 32px"><path class="pot-blade" d="M24 32q4-4.8 8.8-3.1q-4 3.5-8.8 3.1Z" /></g>
+        <g class="pot-leaf" style="transform-origin: 24px 26px"><path class="pot-blade" d="M24 26q-3.7-4.5-8.2-2.9q3.7 3.3 8.2 2.9Z" /></g>
+        <g class="pot-leaf" style="transform-origin: 24px 20px"><path class="pot-blade" d="M24 20q3.4-4.2 7.6-2.7q-3.4 3-7.6 2.7Z" /></g>
+        <g class="pot-leaf" style="transform-origin: 24px 14px"><path class="pot-blade" d="M24 14q-3.2-3.9-7-2.5q3.2 2.8 7 2.5Z" /></g>
+        <g class="pot-bloom" style="transform-origin: 24px 7px"><path class="pot-petals" /><circle class="pot-heart" cx="24" cy="7" r="1.7" /></g>
+        <path class="pot-clay" d="M7 50h34v5H7ZM10 55l3.5 15h21L38 55" />
+      </svg>
+      <p class="pot-count"></p>
+    </div>
+  </body>
+</html>
