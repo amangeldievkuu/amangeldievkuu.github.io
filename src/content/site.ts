@@ -24,9 +24,8 @@ export const site = {
   ],
   now: ['Building something small (placeholder)', 'Reading something long (placeholder)', 'Based somewhere sunny (placeholder)'],
 
-  // TODO: replace with your own. `octocat` is GitHub's demo account, so the garden has something to grow.
-  githubUser: 'octocat',
-  email: 'hello@example.com',
+  githubUser: 'amangeldievkuu',
+  email: 'kutman.amangeldi@gmail.com',
 
   projects: [
     { name: 'Project One', blurb: 'A short line about what it does and why it exists.', href: 'https://github.com/' },
@@ -36,7 +35,7 @@ export const site = {
   ] satisfies Project[],
 
   links: [
-    { label: 'github', handle: '@octocat', href: 'https://github.com/octocat' },
+    { label: 'github', handle: '@amangeldievkuu', href: 'https://github.com/amangeldievkuu' },
     { label: 'x', handle: '@placeholder', href: 'https://x.com/' },
     { label: 'linkedin', handle: 'in/placeholder', href: 'https://www.linkedin.com/' },
     { label: 'telegram', handle: '@placeholder', href: 'https://t.me/' },
