@@ -206,8 +206,12 @@
   }
 
   & .lamp-bulb {
-    fill: currentColor;
+    fill: var(--lamp-light);
     opacity: var(--lit);
+  }
+
+  & stop {
+    stop-color: var(--lamp-light);
   }
 
   /* The head nods around the joint at the top of the arm. */

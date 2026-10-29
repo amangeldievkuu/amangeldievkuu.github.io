@@ -42,7 +42,9 @@ function about(site: Site) {
     <div class="stage stage--desk" data-stage>
       <div class="glyph desk" data-glyph="desk">
         <span class="desk-light" aria-hidden="true"></span>
-        <button class="lamp" type="button" data-lamp aria-pressed="false" aria-label="Lamp: switch between light and dark"></button>
+        <button class="lamp" type="button" data-lamp aria-pressed="false" aria-label="Lamp: switch between light and dark">
+          <span class="lamp-origin" data-lamp-origin aria-hidden="true"></span>
+        </button>
         <span class="desk-screen" aria-hidden="true">&gt;<i>_</i></span>
         <svg class="desk-steam" viewBox="0 0 20 24" aria-hidden="true"><path d="M6 22c-3-4 3-6 0-10s3-6 0-10M14 22c-3-4 3-6 0-10s3-6 0-10"/></svg>
       </div>

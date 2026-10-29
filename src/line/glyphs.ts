@@ -175,6 +175,9 @@ const desk: Glyph = (b, el) => {
   vars(el, {
     'lamp-x': Lx - 28 - x,
     'lamp-y': C[1] - R - 8 - b.y,
+    // The shade's rim is a diameter, so the bulb sits at its centre.
+    'bulb-x': C[0] - x,
+    'bulb-y': C[1] - b.y,
     'screen-x': Mx - 34 - x,
     'screen-y': T - 56 - b.y,
     'mug-x': Gx - x,

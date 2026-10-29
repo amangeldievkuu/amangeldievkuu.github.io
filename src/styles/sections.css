@@ -300,9 +300,17 @@ main {
   position: absolute;
   inset: 0;
   clip-path: var(--light);
-  background: linear-gradient(to bottom, color-mix(in oklab, var(--ink) 26%, transparent), transparent 92%);
-  scale: 1 calc(0.2 + var(--lit) * 0.8);
-  transform-origin: 50% 0;
+  background: radial-gradient(
+    circle at var(--bulb-x) var(--bulb-y),
+    color-mix(in oklab, var(--lamp-light) 30%, transparent),
+    transparent 130px
+  );
+  /* The beam's reach follows --lit: it pours out of the shade, and draws back into it. */
+  mask: radial-gradient(
+    circle at var(--bulb-x) var(--bulb-y),
+    #000 calc(var(--lit) * 150px - 30px),
+    transparent calc(var(--lit) * 150px)
+  );
   pointer-events: none;
 
   .desk.is-drawn & {
@@ -317,6 +325,14 @@ main {
   width: 70px;
   height: 100px;
   border-radius: 14px;
+
+  /* Where the theme circle starts: the bulb. */
+  & .lamp-origin {
+    position: absolute;
+    left: calc(var(--bulb-x) - var(--lamp-x));
+    top: calc(var(--bulb-y) - var(--lamp-y));
+    pointer-events: none;
+  }
 
   &::after {
     content: 'lights on?';

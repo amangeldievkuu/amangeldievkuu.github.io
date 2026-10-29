@@ -22,7 +22,7 @@ export function initTheme() {
 
   for (const lamp of lamps) {
     lamp.addEventListener('click', () => {
-      const r = lamp.getBoundingClientRect()
+      const r = (lamp.querySelector('[data-lamp-origin]') ?? lamp).getBoundingClientRect()
       root.style.setProperty('--vt-x', `${r.left + r.width / 2}px`)
       root.style.setProperty('--vt-y', `${r.top + r.height / 2}px`)
       if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) return apply()
