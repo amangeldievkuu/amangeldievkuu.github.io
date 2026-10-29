@@ -116,6 +116,71 @@
   }
 }
 
+/* Asleep: eyes shut, breathing slowly. */
+.walker.is-sleeping {
+  & .walker-eyes {
+    animation: none;
+    scale: 1 0.15;
+  }
+
+  & .walker-blob {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: breathe 3.2s ease-in-out infinite;
+  }
+}
+
+/* Asleep, the bubble loses its outline and the z's float up out of it, one after another. */
+.walker.is-sleeping .walker-says {
+  left: 4px;
+  bottom: 20px;
+  padding: 0;
+  font-size: 0.75rem;
+  background: none;
+  border-color: transparent;
+}
+
+.walker.is-sleeping.is-flipped .walker-says {
+  left: auto;
+  right: 4px;
+}
+
+.walker-z {
+  display: inline-block;
+  opacity: 0;
+  animation: drift 2.4s ease-out infinite;
+
+  &:nth-child(2) {
+    font-size: 1.15em;
+    animation-delay: 0.8s;
+  }
+
+  &:nth-child(3) {
+    font-size: 1.3em;
+    animation-delay: 1.6s;
+  }
+}
+
+@keyframes drift {
+  0% {
+    opacity: 0;
+    translate: 0 6px;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: 6px -20px;
+  }
+}
+
+@keyframes breathe {
+  50% {
+    scale: 1.05 0.94;
+  }
+}
+
 @keyframes step {
   from {
     rotate: -24deg;
@@ -201,8 +266,14 @@
 
   .walker .leg,
   .walker-eyes,
+  .walker-blob,
+  .walker-z,
   .walker-body.is-hopping svg,
   .desk-steam {
     animation: none !important;
+  }
+
+  .walker-z {
+    opacity: 1;
   }
 }
