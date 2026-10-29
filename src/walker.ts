@@ -11,6 +11,11 @@ const SLEEP_AFTER = 15000
 const VISIT_AFTER = 2600
 // How far the walker's head reaches from its feet (see .walker-body).
 const HEIGHT = 32
+// How far along the line, each way, it looks to see which way is up: wide enough to ride over
+// the pen's wobble and round corners instead of twitching at them.
+const LOOK = 16
+// How quickly it turns to face a new heading: higher is snappier.
+const TURN = 14
 const TAPS = ['hey!', 'hehe.', 'boing.', 'again!', ':)']
 const reduced = matchMedia('(prefers-reduced-motion: reduce)')
 
@@ -26,7 +31,11 @@ export function createWalker(root: HTMLElement, home: () => Seat | null = () => 
   const body = root.querySelector<HTMLElement>('.walker-body')!
   const says = root.querySelector<HTMLElement>('.walker-says')!
   let facingLeft = false
+  // The way it should face, and the way it faces right now, easing toward it.
   let angle = 0
+  let facing = 0
+  let turning = 0
+  let lastTurn = 0
   let lastTip = -1
   let dir = 1
   let sitTimer = 0
@@ -70,6 +79,25 @@ export function createWalker(root: HTMLElement, home: () => Seat | null = () => 
     sleepTimer = window.setTimeout(sleep, SLEEP_AFTER)
   }
 
+  const steer = (now: number) => {
+    const dt = lastTurn ? Math.min(0.05, (now - lastTurn) / 1000) : 1 / 60
+    lastTurn = now
+    facing += (angle - facing) * (1 - Math.exp(-TURN * dt))
+    if (Math.abs(angle - facing) < 0.002) facing = angle
+    body.style.rotate = `${facing.toFixed(3)}rad`
+    turning = facing === angle ? 0 : requestAnimationFrame(steer)
+  }
+
+  const face = () => {
+    if (reduced.matches) {
+      facing = angle
+      body.style.rotate = `${facing.toFixed(3)}rad`
+    } else if (!turning) {
+      lastTurn = 0
+      turning = requestAnimationFrame(steer)
+    }
+  }
+
   const hop = () => {
     body.classList.remove('is-hopping')
     void body.offsetWidth
@@ -89,10 +117,11 @@ export function createWalker(root: HTMLElement, home: () => Seat | null = () => 
     if (!seat || !pen) return
     const [x, y] = pen.pointAt(pen.tip)
     potted = seat
-    angle = 0
+    // Upright, by the shortest way round.
+    angle = Math.round(facing / (Math.PI * 2)) * Math.PI * 2
+    face()
     root.classList.add('is-potted', 'is-flipped')
     root.classList.remove('is-sniffing')
-    body.style.rotate = '0rad'
     body.style.scale = '1 1'
     say(undefined)
     root.style.transform = at([seat.x, seat.y])
@@ -155,8 +184,8 @@ export function createWalker(root: HTMLElement, home: () => Seat | null = () => 
     if (potted) return
 
     const [x, y] = p.pointAt(tip)
-    const [ax, ay] = p.pointAt(tip - 9)
-    const [bx, by] = p.pointAt(tip + 9)
+    const [ax, ay] = p.pointAt(tip - LOOK)
+    const [bx, by] = p.pointAt(tip + LOOK)
     let heading = Math.atan2(by - ay, bx - ax) + (dir < 0 ? Math.PI : 0)
     if (Math.abs(Math.cos(heading)) > 0.6) facingLeft = Math.cos(heading) < 0
     heading -= facingLeft ? Math.PI : 0
@@ -184,7 +213,7 @@ export function createWalker(root: HTMLElement, home: () => Seat | null = () => 
       root.animate(arcing(back, [x, y]), { duration: 450 })
     }
     root.classList.toggle('is-flipped', x > width - 170)
-    body.style.rotate = `${angle.toFixed(3)}rad`
+    face()
     body.style.scale = mirrored ? '-1 1' : '1 1'
   }
 

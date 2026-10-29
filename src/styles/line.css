@@ -56,9 +56,8 @@
   color: var(--ink);
   pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
-  transition:
-    rotate 0.22s var(--ease-out),
-    scale 0.2s var(--ease-out);
+  /* Turning is eased frame by frame in walker.ts; only the flip to face the other way is a transition. */
+  transition: scale 0.2s var(--ease-out);
 
   & svg {
     display: block;
