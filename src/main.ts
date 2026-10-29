@@ -3,17 +3,23 @@ import './styles/base.css'
 import './styles/sections.css'
 import './styles/line.css'
 import './styles/pot.css'
+import './styles/keepsake.css'
 import { initCaptions } from './captions.ts'
 import { plantGarden } from './garden.ts'
 import { initGlide } from './glide.ts'
+import { createKeepsake } from './keepsake.ts'
 import { Pen } from './line/pen.ts'
 import { createPot } from './pot.ts'
 import { initTheme } from './theme.ts'
 import { createWalker } from './walker.ts'
 
 const pen = new Pen(document.querySelector('.ink-line')!, document.querySelector('.ink-end')!)
-const walker = createWalker(document.querySelector('.walker')!)
-const pot = createPot(document.querySelector('.pot')!)
+const keepsake = createKeepsake(document.querySelector('[data-keepsake]')!)
+const pot = createPot(document.querySelector('.pot')!, {
+  pick: (picked) => keepsake.open(picked),
+  watered: () => walker.chirp('thanks.'),
+})
+const walker = createWalker(document.querySelector('.walker')!, () => pot.seat())
 pen.onFrame = (p) => {
   walker.update(p)
   pot.update(p)

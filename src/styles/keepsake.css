@@ -1,0 +1,200 @@
+/* The keepsake: a picked flower on a small card, drawn in one line. */
+
+.keepsake {
+  width: min(340px, 100% - 40px);
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  overflow: visible;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  opacity: 0;
+  transition:
+    opacity 0.4s var(--ease-out),
+    overlay 0.4s allow-discrete,
+    display 0.4s allow-discrete;
+
+  &[open] {
+    opacity: 1;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  &::backdrop {
+    background: color-mix(in oklab, var(--paper) 70%, transparent);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    transition:
+      opacity 0.4s var(--ease-out),
+      overlay 0.4s allow-discrete,
+      display 0.4s allow-discrete;
+  }
+
+  &[open]::backdrop {
+    opacity: 1;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+}
+
+.keepsake-card {
+  position: relative;
+  padding: 18px 20px 24px;
+  text-align: center;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 0 22px 44px -28px rgb(0 0 0 / 0.5);
+  rotate: -1.2deg;
+}
+
+.keepsake-art {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.keepsake-line {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+
+  .keepsake.is-drawing & {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1.8s linear 0.25s;
+  }
+}
+
+/* The colour comes in once the pen has drawn round it. */
+.keepsake-heart,
+.keepsake-cup {
+  opacity: 0;
+
+  .keepsake.is-drawing & {
+    opacity: 1;
+    transition: opacity 0.6s var(--heart-at, 0s);
+  }
+}
+
+.keepsake-heart {
+  fill: var(--heart);
+}
+
+.keepsake-cup {
+  fill: color-mix(in oklab, var(--heart) 45%, var(--paper));
+}
+
+.keepsake-name {
+  margin-top: 4px;
+  font: italic 300 2.4rem / 1.1 var(--serif);
+}
+
+.keepsake-about {
+  margin-top: 8px;
+  font: 400 var(--step--1) / 1.4 var(--sans);
+  color: var(--ink-2);
+}
+
+.keepsake-meta {
+  margin-top: 8px;
+  font: 400 11px / 1.5 var(--mono);
+  color: var(--ink-3);
+}
+
+.keepsake-close {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  font: 400 20px / 1 var(--sans);
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+
+  &:is(:hover, :focus-visible) {
+    background: var(--ink);
+    color: var(--paper);
+  }
+}
+
+.keepsake-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+
+  & button {
+    padding: 7px 16px 9px;
+    font: italic 400 1.05rem / 1 var(--serif);
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+
+    &:is(:hover, :focus-visible) {
+      background: var(--ink);
+      color: var(--paper);
+    }
+  }
+}
+
+.keepsake-note {
+  min-height: 1.5em;
+  margin-top: 12px;
+  text-align: center;
+  font: 400 12px / 1.5 var(--mono);
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+
+/* The flower on its way from the pot to the card. */
+.keepsake-flight {
+  position: fixed;
+  pointer-events: none;
+
+  & path {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 2px;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  & circle {
+    fill: var(--heart);
+  }
+
+  &.is-tulip path {
+    fill: color-mix(in oklab, var(--heart) 45%, var(--paper));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .keepsake,
+  .keepsake::backdrop {
+    transition: none;
+  }
+
+  .keepsake.is-drawing :is(.keepsake-line, .keepsake-heart, .keepsake-cup) {
+    transition: none;
+  }
+}

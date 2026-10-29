@@ -47,19 +47,58 @@
       </div>
     </div>
 
-    <div class="pot" aria-hidden="true">
-      <svg class="pot-art" viewBox="0 0 48 72">
-        <path class="pot-stem" pathLength="1" d="M24 50c-2-8 2-14 0-21s-2-14 0-21" />
-        <g class="pot-leaf" style="transform-origin: 24px 44px"><path class="pot-blade" d="M24 44q4.5-5.5 10-3.5q-4.5 4-10 3.5Z" /></g>
-        <g class="pot-leaf" style="transform-origin: 24px 38px"><path class="pot-blade" d="M24 38q-4.2-5.2-9.4-3.3q4.2 3.8 9.4 3.3Z" /></g>
-        <g class="pot-leaf" style="transform-origin: 24px 32px"><path class="pot-blade" d="M24 32q4-4.8 8.8-3.1q-4 3.5-8.8 3.1Z" /></g>
-        <g class="pot-leaf" style="transform-origin: 24px 26px"><path class="pot-blade" d="M24 26q-3.7-4.5-8.2-2.9q3.7 3.3 8.2 2.9Z" /></g>
-        <g class="pot-leaf" style="transform-origin: 24px 20px"><path class="pot-blade" d="M24 20q3.4-4.2 7.6-2.7q-3.4 3-7.6 2.7Z" /></g>
-        <g class="pot-leaf" style="transform-origin: 24px 14px"><path class="pot-blade" d="M24 14q-3.2-3.9-7-2.5q3.2 2.8 7 2.5Z" /></g>
-        <g class="pot-bloom" style="transform-origin: 24px 7px"><path class="pot-petals" /><circle class="pot-heart" cx="24" cy="7" r="1.7" /></g>
-        <path class="pot-clay" d="M7 50h34v5H7ZM10 55l3.5 15h21L38 55" />
-      </svg>
-      <p class="pot-count"></p>
+    <div class="pot" inert>
+      <button class="pot-button" type="button" aria-label="Your plant">
+        <svg class="pot-art" viewBox="0 0 48 72" aria-hidden="true">
+          <g class="pot-plant" style="transform-origin: 24px 50px">
+            <g class="pot-sway" style="transform-origin: 24px 50px">
+              <path class="pot-stem" pathLength="1" d="M24 50c-2-8 2-14 0-21s-2-14 0-21" />
+              <g class="pot-leaf" style="transform-origin: 24px 44px"><path class="pot-blade" d="M24 44q4.5-5.5 10-3.5q-4.5 4-10 3.5Z" /></g>
+              <g class="pot-leaf" style="transform-origin: 24px 38px"><path class="pot-blade" d="M24 38q-4.2-5.2-9.4-3.3q4.2 3.8 9.4 3.3Z" /></g>
+              <g class="pot-leaf" style="transform-origin: 24px 32px"><path class="pot-blade" d="M24 32q4-4.8 8.8-3.1q-4 3.5-8.8 3.1Z" /></g>
+              <g class="pot-leaf" style="transform-origin: 24px 26px"><path class="pot-blade" d="M24 26q-3.7-4.5-8.2-2.9q3.7 3.3 8.2 2.9Z" /></g>
+              <g class="pot-leaf" style="transform-origin: 24px 20px"><path class="pot-blade" d="M24 20q3.4-4.2 7.6-2.7q-3.4 3-7.6 2.7Z" /></g>
+              <g class="pot-leaf" style="transform-origin: 24px 14px"><path class="pot-blade" d="M24 14q-3.2-3.9-7-2.5q3.2 2.8 7 2.5Z" /></g>
+              <path class="pot-bud" d="M24 9c-2.2-1.6-2.4-4.8 0-7 2.4 2.2 2.2 5.4 0 7Z" />
+              <g class="pot-bloom" style="transform-origin: 24px 7px"><path class="pot-petals" /><circle class="pot-heart" cx="24" cy="7" r="1.7" /></g>
+              <g class="pot-butterfly" transform="translate(37 1)">
+                <g class="pot-flutter"><path class="pot-wings" d="M0 0C-2-3.5-5.5-3-5-.5S-1.5 2 0 0ZM0 0C2-3.5 5.5-3 5-.5S1.5 2 0 0Z" /></g>
+              </g>
+            </g>
+          </g>
+          <path class="pot-sprout" style="transform-origin: 15.5px 50px" d="M15.5 50q-.4-3.6-3.4-5.6" />
+          <path class="pot-sprout" style="transform-origin: 32.5px 50px" d="M32.5 50q.4-3.6 3.4-5.6" />
+          <path class="pot-sprout" style="transform-origin: 19px 50px" d="M19 50q-.2-3-1.8-4.6" />
+          <path class="pot-sprout" style="transform-origin: 29px 50px" d="M29 50q.2-3 1.8-4.6" />
+          <path class="pot-sprout" style="transform-origin: 12px 50px" d="M12 50q-.6-2.6-2.8-3.8" />
+          <path class="pot-clay" d="M7 50h34v5H7ZM10 55l3.5 15h21L38 55" />
+          <path class="pot-snow" d="M6.2 51.2c-.4-2 1.4-3.1 3.2-2.4.8-1.6 3.4-1.8 4.6-.4 1-1.4 3.6-1.5 4.8-.2 1.2-1.3 3.8-1.3 5 0 1.2-1.3 3.8-1.3 5 0 1.2-1.4 3.8-1.3 4.8.2 1.2-1.4 3.8-1.2 4.6.4 1.8-.7 3.6.4 3.2 2.4Z" />
+          <g class="pot-flakes"><circle cx="4" cy="0" r="1" /><circle cx="17" cy="0" r=".8" /><circle cx="33" cy="0" r="1" /><circle cx="45" cy="0" r=".8" /></g>
+          <g class="pot-fallen" style="transform-origin: 24px 32px"><path class="pot-blade" d="M24 32q4-4.8 8.8-3.1q-4 3.5-8.8 3.1Z" /></g>
+          <g class="pot-can" style="transform-origin: 2px 19px"><path d="M-7 14h12l-1 10H-6ZM4.6 20l7.4-6.5M11 12.4l2.2 2.2M-7 16.5c-3 0-3 5 0 5M-4.5 14c0-3 7-3 7 0" /></g>
+          <g class="pot-drops"><path transform="translate(13.6 22)" d="M0 0c-.9 1.3-1.2 2-1.2 2.6a1.2 1.2 0 0 0 2.4 0C1.2 2 .9 1.3 0 0Z" /><path transform="translate(15.2 21)" d="M0 0c-.9 1.3-1.2 2-1.2 2.6a1.2 1.2 0 0 0 2.4 0C1.2 2 .9 1.3 0 0Z" /><path transform="translate(14.2 23)" d="M0 0c-.9 1.3-1.2 2-1.2 2.6a1.2 1.2 0 0 0 2.4 0C1.2 2 .9 1.3 0 0Z" /></g>
+        </svg>
+        <span class="pot-count" aria-hidden="true"></span>
+      </button>
     </div>
+
+    <dialog class="keepsake" data-keepsake data-site="%SITE_NAME%" aria-labelledby="keepsake-name" aria-describedby="keepsake-about">
+      <div class="keepsake-card">
+        <svg class="keepsake-art" viewBox="0 0 240 220" aria-hidden="true">
+          <path class="keepsake-cup" />
+          <circle class="keepsake-heart" r="0" />
+          <path class="keepsake-line" pathLength="1" />
+        </svg>
+        <h2 class="keepsake-name" id="keepsake-name"></h2>
+        <p class="keepsake-about" id="keepsake-about"></p>
+        <p class="keepsake-meta"></p>
+        <form method="dialog"><button class="keepsake-close" aria-label="Close">&times;</button></form>
+      </div>
+      <div class="keepsake-actions">
+        <button type="button" data-keep>keep it</button>
+        <button type="button" data-give>give it to someone</button>
+      </div>
+      <p class="keepsake-note" role="status"></p>
+    </dialog>
   </body>
 </html>

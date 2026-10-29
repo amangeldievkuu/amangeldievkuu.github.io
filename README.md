@@ -25,6 +25,9 @@ Links and assets are root-absolute (`/writing/…`, `/assets/…`), so the site 
 
 - `plugins/` renders the page and every post to static HTML at build time.
 - `src/line/` measures the page and builds one path through every `[data-glyph]` element; `pen.ts` maps scroll to drawn length.
-- `src/walker.ts` is the little one on the pen tip; `src/pot.ts` is the plant in the corner that grows with the line, a leaf per section, and blooms at the end.
+- `src/walker.ts` is the little one on the pen tip. At the end of the line it hops over to the pot.
+- `src/pot.ts` is the visitor's own plant in the corner: a leaf per section, a bloom at the end, a sprout for every return visit, and the season and time of day on it. Tap the bloom to pick it; hold the pot to water it.
+- `src/flower.ts` grows each visitor's flower from a seed kept in their browser; `src/keepsake.ts` is the card a picked flower lands on, to save as a PNG or give away as a `/?flower=…` link.
+  Preview any season with `?season=spring|summer|autumn|winter`.
 - `src/garden.ts` grows plants from the GitHub API (cached for an hour).
 - The desk lamp switches the theme.

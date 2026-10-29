@@ -1,13 +1,11 @@
-/* The corner pot: a plant that grows with the line and blooms when it's finished. */
+/* The corner pot: the visitor's own plant. It grows with the line and blooms when it's finished,
+   and can be picked, watered, blown about and snowed on. */
 
 .pot {
   position: fixed;
   right: max(12px, env(safe-area-inset-right));
   bottom: max(10px, env(safe-area-inset-bottom));
   z-index: 3;
-  display: grid;
-  justify-items: center;
-  gap: 4px;
   padding: 14px 10px 4px;
   pointer-events: none;
   background: radial-gradient(closest-side, var(--paper) 70%, transparent);
@@ -23,6 +21,26 @@
   }
 }
 
+.pot-button {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  border-radius: 14px;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  touch-action: manipulation;
+
+  .pot.is-shown & {
+    pointer-events: auto;
+  }
+
+  &:focus-visible {
+    outline: 1.5px solid var(--ink);
+    outline-offset: 4px;
+  }
+}
+
 .pot-art {
   display: block;
   width: 48px;
@@ -32,7 +50,12 @@
 .pot-stem,
 .pot-clay,
 .pot-blade,
-.pot-petals {
+.pot-petals,
+.pot-bud,
+.pot-sprout,
+.pot-snow,
+.pot-wings,
+.pot-can path {
   stroke: var(--ink);
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -72,18 +95,310 @@
   .pot.is-bloom & {
     scale: 1;
   }
+
+  /* Picked: gone at once, it's on its way to the card. */
+  .pot.is-picked & {
+    transition: none;
+  }
 }
 
 .pot-petals {
   fill: var(--paper);
   stroke-width: 1.4;
+  transform-origin: 24px 7px;
+  transition:
+    scale 2.4s var(--ease-out),
+    rotate 2.4s var(--ease-out);
+
+  .pot.is-tulip & {
+    fill: color-mix(in oklab, var(--heart) 45%, var(--paper));
+    transform-origin: 24px 9px;
+  }
 }
 
 .pot-heart {
-  fill: var(--gold);
+  fill: var(--heart, var(--gold));
+
+  .pot.is-tulip & {
+    display: none;
+  }
 }
 
+/* Lamp on, it's night: the flower slowly closes, and opens again in the morning. */
+:root[data-theme='dark'] .pot-petals {
+  scale: 0.5;
+  rotate: 36deg;
+}
+
+:root[data-theme='dark'] .pot.is-tulip .pot-petals {
+  scale: 0.72 1;
+  rotate: 0deg;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .pot-petals {
+    scale: 0.5;
+    rotate: 36deg;
+  }
+
+  :root:not([data-theme='light']) .pot.is-tulip .pot-petals {
+    scale: 0.72 1;
+    rotate: 0deg;
+  }
+}
+
+/* A tap that isn't a pick gives it a shake. */
+.pot-sway {
+  transition: scale 0.8s var(--ease-spring);
+
+  &.is-rustling {
+    animation: rustle 0.9s var(--ease-out);
+  }
+}
+
+@keyframes rustle {
+  20% {
+    rotate: -6deg;
+  }
+  45% {
+    rotate: 4deg;
+  }
+  70% {
+    rotate: -2deg;
+  }
+}
+
+/* A sprout at the soil for every return visit. */
+.pot-sprout {
+  fill: none;
+  stroke-width: 1.3;
+  scale: 0;
+  transition: scale 0.7s var(--ease-spring);
+
+  &.is-out {
+    scale: 1;
+  }
+}
+
+/* ---------- watering: the can tips, drops fall, and the plant stretches up to drink ---------- */
+
+.pot-can {
+  opacity: 0;
+  translate: -4px 2px;
+  transition:
+    opacity 0.3s,
+    rotate 0.5s var(--ease-spring),
+    translate 0.5s var(--ease-spring);
+
+  & path {
+    fill: var(--paper);
+    stroke-width: 1.3;
+  }
+
+  .pot.is-watering & {
+    opacity: 1;
+    translate: 0 0;
+    rotate: 28deg;
+  }
+}
+
+.pot-drops {
+  fill: var(--ink-2);
+  opacity: 0;
+
+  .pot.is-watering & {
+    opacity: 1;
+  }
+
+  & path {
+    .pot.is-watering & {
+      animation: drip 0.7s ease-in infinite;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.23s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.46s;
+    }
+  }
+}
+
+@keyframes drip {
+  from {
+    translate: 0 0;
+    opacity: 0;
+  }
+  15%,
+  80% {
+    opacity: 1;
+  }
+  to {
+    translate: 1px 24px;
+    opacity: 0;
+  }
+}
+
+.pot.is-watering {
+  & .pot-sway {
+    scale: 1 1.06;
+  }
+
+  & .pot-leaf.is-out {
+    scale: 1.15;
+  }
+}
+
+/* ---------- the seasons ---------- */
+
+/* Spring: a bud rides the tip of the stem as it grows. */
+.pot-bud {
+  display: none;
+  fill: color-mix(in oklab, var(--heart) 30%, var(--paper));
+  stroke-width: 1.3;
+  translate: 0 calc((1 - var(--grow, 0)) * 42px);
+
+  .pot[data-season='spring']:not(.is-bloom, .is-picked) & {
+    display: inline;
+  }
+}
+
+/* Summer: a butterfly comes to the bloom. */
+.pot-butterfly {
+  opacity: 0;
+  transition: opacity 0.8s 0.6s;
+
+  .pot[data-season='summer'].is-bloom & {
+    opacity: 1;
+  }
+}
+
+.pot-flutter {
+  animation: flutter 6s ease-in-out infinite;
+}
+
+.pot-wings {
+  fill: var(--paper);
+  stroke-width: 1;
+  animation: flap 0.24s ease-in-out infinite alternate;
+}
+
+@keyframes flutter {
+  25% {
+    translate: -3px -4px;
+  }
+  50% {
+    translate: 2px -2px;
+  }
+  75% {
+    translate: -1px 2px;
+  }
+}
+
+@keyframes flap {
+  to {
+    scale: 0.3 1;
+  }
+}
+
+/* Autumn: the leaves turn, and one comes down to rest by the pot. */
+.pot[data-season='autumn'] .pot-blade {
+  fill: color-mix(in oklab, var(--gold) 35%, var(--paper));
+}
+
+.pot-fallen {
+  opacity: 0;
+
+  .pot.is-falling & {
+    opacity: 1;
+    animation: leaf-fall 3.4s ease-in-out both;
+  }
+}
+
+@keyframes leaf-fall {
+  from {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  20% {
+    translate: 5px 8px;
+    rotate: 30deg;
+  }
+  40% {
+    translate: -1px 16px;
+    rotate: -18deg;
+  }
+  62% {
+    translate: 9px 25px;
+    rotate: 42deg;
+  }
+  82% {
+    translate: 7px 32px;
+    rotate: 2deg;
+  }
+  to {
+    translate: 15px 37px;
+    rotate: 20deg;
+  }
+}
+
+/* Winter: snow on the pot, and a few flakes coming down. */
+.pot-snow,
+.pot-flakes {
+  display: none;
+
+  .pot[data-season='winter'] & {
+    display: inline;
+  }
+}
+
+.pot-snow {
+  fill: var(--paper);
+  stroke-width: 1.3;
+}
+
+.pot-flakes circle {
+  fill: var(--ink-3);
+  opacity: 0;
+  animation: snow 7s linear infinite;
+
+  &:nth-child(2) {
+    animation-delay: 2.1s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 4.3s;
+  }
+
+  &:nth-child(4) {
+    animation-delay: 5.6s;
+  }
+}
+
+@keyframes snow {
+  from {
+    translate: 0 -6px;
+    opacity: 0;
+  }
+  12%,
+  85% {
+    opacity: 1;
+  }
+  50% {
+    translate: 3px 32px;
+  }
+  to {
+    translate: -1px 66px;
+    opacity: 0;
+  }
+}
+
+/* Centred under the pot without widening it, so the plant never shifts as the label changes. */
 .pot-count {
+  display: flex;
+  justify-content: center;
+  width: 0;
   font: 400 11px / 1 var(--mono);
   color: var(--ink-3);
   white-space: nowrap;
@@ -96,7 +411,7 @@
   }
 
   .pot {
-    padding-inline: 6px;
+    padding-inline: 10px;
   }
 
   .pot-art {
@@ -112,7 +427,28 @@
 @media (prefers-reduced-motion: reduce) {
   .pot,
   .pot-leaf,
-  .pot-bloom {
+  .pot-bloom,
+  .pot-petals,
+  .pot-sway,
+  .pot-sprout,
+  .pot-can {
     transition: none;
+  }
+
+  .pot-sway.is-rustling,
+  .pot-flutter,
+  .pot-wings,
+  .pot.is-watering .pot-drops path {
+    animation: none;
+  }
+
+  .pot.is-falling .pot-fallen {
+    animation-duration: 1ms;
+  }
+
+  .pot-flakes circle {
+    animation: none;
+    opacity: 1;
+    translate: 0 30px;
   }
 }

@@ -116,6 +116,28 @@
   }
 }
 
+/* By the pot it leaves the line: fixed to the screen, like the pot. */
+.walker.is-potted {
+  position: fixed;
+}
+
+/* A good long sniff of the flower. */
+.walker.is-sniffing .walker-blob {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: sniff 0.9s ease-in-out 2;
+}
+
+@keyframes sniff {
+  40% {
+    rotate: 12deg;
+    scale: 1.04 0.96;
+  }
+  70% {
+    rotate: 8deg;
+  }
+}
+
 /* Asleep: eyes shut, breathing slowly. */
 .walker.is-sleeping {
   & .walker-eyes {
@@ -267,6 +289,7 @@
   .walker .leg,
   .walker-eyes,
   .walker-blob,
+  .walker.is-sniffing .walker-blob,
   .walker-z,
   .walker-body.is-hopping svg,
   .desk-steam {

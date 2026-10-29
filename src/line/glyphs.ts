@@ -1,4 +1,4 @@
-import { arc, type Box, type Pt } from './geom.ts'
+import { arc, leaf, type Box, type Pt } from './geom.ts'
 
 // Each glyph is a detour of the one line: it starts on the ground at the left of its box,
 // draws its shape, and comes back down to the ground on the right. Lanes drawn right-to-left
@@ -13,18 +13,6 @@ const TAU = Math.PI * 2
 
 function vars(el: HTMLElement, entries: Record<string, number | string>) {
   for (const [k, v] of Object.entries(entries)) el.style.setProperty(`--${k}`, typeof v === 'number' ? `${v.toFixed(1)}px` : v)
-}
-
-/** An almond-shaped loop leaving point p in direction `angle`. */
-function leaf([px, py]: Pt, angle: number, len: number, width: number): Pt[] {
-  const dx = Math.cos(angle)
-  const dy = Math.sin(angle)
-  return Array.from({ length: 25 }, (_, i) => {
-    const s = (i / 24) * TAU
-    const u = (len * (1 - Math.cos(s))) / 2
-    const v = (width / 2) * Math.sin(s)
-    return [px + u * dx - v * dy, py + u * dy + v * dx]
-  })
 }
 
 /** Cursive loops, the way a pen warms up before writing. */

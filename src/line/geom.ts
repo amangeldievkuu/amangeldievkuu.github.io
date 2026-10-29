@@ -18,6 +18,18 @@ export function arc(cx: number, cy: number, r: number, a0: number, a1: number, r
   })
 }
 
+/** An almond-shaped loop leaving point p in direction `angle`. */
+export function leaf([px, py]: Pt, angle: number, len: number, width: number): Pt[] {
+  const dx = Math.cos(angle)
+  const dy = Math.sin(angle)
+  return Array.from({ length: 25 }, (_, i) => {
+    const s = (i / 24) * Math.PI * 2
+    const u = (len * (1 - Math.cos(s))) / 2
+    const v = (width / 2) * Math.sin(s)
+    return [px + u * dx - v * dy, py + u * dy + v * dx]
+  })
+}
+
 /** Mulberry32: a tiny seeded PRNG, so the hand-drawn wobble is identical on every visit. */
 export function prng(seed: number) {
   return () => {
