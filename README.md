@@ -13,6 +13,14 @@ npm run build    # static site in dist/
 - **`src/content/site.ts`** — name, bio, email, GitHub username, projects (houses) and links (kites).
 - **`content/posts/*.md`** — one file per post (books). Front matter: `title`, `date` (YYYY-MM-DD), `description`.
 
+## Deploy
+
+Live at **https://amangeldievkuu.github.io/**.
+
+Every push to `main` runs `.github/workflows/deploy.yml`, which builds `dist/` and publishes it to GitHub Pages (Settings → Pages → Source: GitHub Actions). Re-run it by hand with `gh workflow run deploy.yml`.
+
+Links and assets are root-absolute (`/writing/…`, `/assets/…`), so the site must be served from a domain root — a `<user>.github.io` repo or a custom domain (`public/CNAME`), not a `/repo-name/` subpath.
+
 ## How it fits together
 
 - `plugins/` renders the page and every post to static HTML at build time.
