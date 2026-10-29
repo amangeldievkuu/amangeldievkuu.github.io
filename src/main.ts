@@ -10,6 +10,7 @@ import { initGlide } from './glide.ts'
 import { createKeepsake } from './keepsake.ts'
 import { Pen } from './line/pen.ts'
 import { createPot } from './pot.ts'
+import { initSmoothScroll } from './smooth.ts'
 import { initTheme } from './theme.ts'
 import { createWalker } from './walker.ts'
 
@@ -34,6 +35,7 @@ const rebuild = () => {
 initTheme()
 initCaptions()
 initGlide()
+initSmoothScroll()
 new ResizeObserver(rebuild).observe(document.body)
 document.fonts.ready.then(rebuild)
 addEventListener('scroll', () => pen.kick(), { passive: true })
