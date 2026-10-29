@@ -1,5 +1,6 @@
-// The desk lamp is the theme switch: lamp on means night mode.
-// The new theme spreads out from the lamp as a circle, using a same-document View Transition.
+// Every lamp ([data-lamp]) is a theme switch: the desk lamp at home, the reading lamp on posts.
+// Lamp on means night mode. The new theme spreads out from the lamp as a circle, using a
+// same-document View Transition.
 
 const root = document.documentElement
 const system = matchMedia('(prefers-color-scheme: dark)')

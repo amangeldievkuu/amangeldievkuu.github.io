@@ -21,6 +21,24 @@
     <header class="top">
       <a class="mark" href="/" aria-label="%SITE_NAME%, home">%SITE_NAME%<span>.</span></a>
       <nav aria-label="Back"><a href="/#writing">← back to the shelf</a></nav>
+      <button class="reading-lamp" type="button" data-lamp aria-pressed="false" aria-label="Lamp: switch between light and dark">
+        <svg viewBox="0 0 44 52" aria-hidden="true">
+          <defs>
+            <linearGradient id="lamp-glow" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="currentColor" stop-opacity="0.55" />
+              <stop offset="1" stop-color="currentColor" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <path class="lamp-body" pathLength="1" d="M25 49.5c5-.6 11-.2 16-.4M33.5 49c.6-7 2.4-14.5 4.5-21.6M38 27.4c-5.2-4.6-10.6-9-16.4-13" />
+          <g class="lamp-head">
+            <g transform="translate(14 17) rotate(30)">
+              <path class="lamp-glow" d="M-7 1 7 1 17 27-17 27Z" fill="url(#lamp-glow)" />
+              <path pathLength="1" d="M-8.5 .4C-8.8-8.6 8.4-9.4 8.6.2c-5.6.6-11.4.4-17.1.2" />
+              <circle class="lamp-bulb" cx="0" cy="2.6" r="2.6" />
+            </g>
+          </g>
+        </svg>
+      </button>
     </header>
 
     <main class="post">
