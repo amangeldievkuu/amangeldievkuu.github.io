@@ -5,6 +5,7 @@ import './styles/line.css'
 import './styles/pot.css'
 import { initCaptions } from './captions.ts'
 import { plantGarden } from './garden.ts'
+import { initGlide } from './glide.ts'
 import { Pen } from './line/pen.ts'
 import { createPot } from './pot.ts'
 import { initTheme } from './theme.ts'
@@ -26,6 +27,7 @@ const rebuild = () => {
 
 initTheme()
 initCaptions()
+initGlide()
 new ResizeObserver(rebuild).observe(document.body)
 document.fonts.ready.then(rebuild)
 addEventListener('scroll', () => pen.kick(), { passive: true })
