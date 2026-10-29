@@ -109,7 +109,8 @@ function garden(site: Site) {
       <p class="lede">A garden of public code. Taller plants have more stars; the ones in bloom were tended recently.</p>
       <p class="status" data-garden-status>planting seeds…</p>
     </div>
-    <div class="stage stage--garden" data-stage data-garden="${esc(site.githubUser)}" data-caption-default="">
+    <div class="stage stage--garden" data-stage data-garden="${esc(site.githubUser)}"
+      data-garden-repos="${esc(site.garden.join(','))}" data-caption-default="">
       ${seeds}
       <a class="glyph sign" data-glyph="sign" href="${profile}" aria-label="All repositories on GitHub"><span>github →</span></a>
       <p class="caption" aria-hidden="true"></p>

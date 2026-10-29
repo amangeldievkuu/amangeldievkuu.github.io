@@ -71,8 +71,10 @@ export async function plantGarden() {
   const status = document.querySelector<HTMLElement>('[data-garden-status]')
   if (!stage) return
   const user = stage.dataset.garden!
+  const chosen = new Set(stage.dataset.gardenRepos?.split(',').filter(Boolean))
   try {
     const repos = (await fetchRepos(user))
+      .filter((r) => !chosen.size || chosen.has(r.name))
       .sort((a, b) => b.stargazers_count - a.stargazers_count || b.pushed_at.localeCompare(a.pushed_at))
       .slice(0, MAX_PLANTS)
     stage.querySelectorAll('.is-seed').forEach((s) => s.remove())
