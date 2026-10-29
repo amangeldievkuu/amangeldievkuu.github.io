@@ -53,9 +53,7 @@ export const site = {
 
   links: [
     { label: 'github', handle: '@amangeldievkuu', href: 'https://github.com/amangeldievkuu' },
-    { label: 'x', handle: '@placeholder', href: 'https://x.com/' },
-    { label: 'linkedin', handle: 'in/kutman-amangeldiev', href: 'https://www.linkedin.com/in/kutman-amangeldiev-36233527a/' },
-    { label: 'telegram', handle: '@placeholder', href: 'https://t.me/' },
+    { label: 'x', handle: '@kutmanaisha', href: 'https://x.com/kutmanaisha' },
   ] satisfies Link[],
 }
 

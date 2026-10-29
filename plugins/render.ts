@@ -106,7 +106,7 @@ function garden(site: Site) {
   <section class="stop stop--garden" id="github" data-says="water the plants?">
     <div class="stop-head">
       <h2 class="label">github</h2>
-      <p class="lede">A garden of public code. Taller plants have more stars; the ones in bloom were tended recently.</p>
+      <p class="lede">A garden of public code. Taller plants have more commits; the ones in bloom were tended recently.</p>
       <p class="status" data-garden-status>planting seeds…</p>
     </div>
     <div class="stage stage--garden" data-stage data-garden="${esc(site.githubUser)}"
