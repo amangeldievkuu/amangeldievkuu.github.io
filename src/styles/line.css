@@ -151,6 +151,113 @@
   }
 }
 
+/* Its laptop: tucked away until it sits a while. The paper halo round the lid keeps it from
+   melting into the blob behind it. */
+.walker-body svg {
+  overflow: visible;
+}
+
+.walker-laptop {
+  opacity: 0;
+  scale: 0.6;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition:
+    opacity 0.25s,
+    scale 0.4s var(--ease-spring);
+
+  .walker.is-coding &,
+  .walker.is-sleeping & {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.walker-laptop-lid {
+  fill: currentColor;
+  stroke: var(--paper);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: scale 0.5s var(--ease-out);
+}
+
+.walker-laptop-base {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Lines of code, typed out one after another, over and over. */
+.walker-laptop-code {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+
+  .walker.is-coding & {
+    animation: type-line 2.4s steps(6) infinite;
+  }
+
+  /* (The lid is the first child.) */
+  &:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+
+  &:nth-child(4) {
+    animation-delay: 1.2s;
+  }
+}
+
+/* Coding: eyes down on the screen, bobbing along as it types. */
+.walker-eyes {
+  transition: translate 0.3s var(--ease-out);
+}
+
+.walker.is-coding {
+  & .walker-eyes {
+    translate: 1px 1.5px;
+  }
+
+  & .walker-blob {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: typing 0.26s ease-in-out infinite alternate;
+  }
+}
+
+/* Asleep, the lid comes down. */
+.walker.is-sleeping .walker-laptop-lid {
+  scale: 1 0.12;
+}
+
+@keyframes type-line {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  40%,
+  90% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes typing {
+  to {
+    translate: 0 0.6px;
+    scale: 1.01 0.99;
+  }
+}
+
 /* Asleep, the bubble loses its outline and the z's float up out of it, one after another. */
 .walker.is-sleeping .walker-says {
   left: 4px;
@@ -281,6 +388,8 @@
 @media (prefers-reduced-motion: reduce) {
   .walker-body,
   .walker-body svg,
+  .walker-laptop,
+  .walker-laptop-lid,
   .leg {
     transition: none;
   }
@@ -290,6 +399,7 @@
   .walker-blob,
   .walker.is-sniffing .walker-blob,
   .walker-z,
+  .walker-laptop-code,
   .walker-body.is-hopping svg,
   .desk-steam {
     animation: none !important;
@@ -297,5 +407,9 @@
 
   .walker-z {
     opacity: 1;
+  }
+
+  .walker.is-coding .walker-laptop-code {
+    stroke-dashoffset: 0;
   }
 }
