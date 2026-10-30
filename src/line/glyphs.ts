@@ -163,10 +163,7 @@ const desk: Glyph = (b, el) => {
   const T = g - 76
   const Lx = x + 54
   const Mx = x + 152
-  const Gx = x + 256
-  // A standing photo between the monitor and the mug, when there's a portrait to put in it.
-  const Fx = x + 200
-  const framed = !!el.querySelector('.desk-portrait')
+  const Gx = x + 222
 
   // Anglepoise lamp: an elbowed arm and a dome shade pointing down-right at the desk.
   const E: Pt = [Lx - 20, T - 48]
@@ -190,8 +187,6 @@ const desk: Glyph = (b, el) => {
     'screen-y': T - 56 - b.y,
     'mug-x': Gx - x,
     'mug-y': T - 20 - b.y,
-    'portrait-x': Fx - x,
-    'portrait-y': T - 50 - b.y,
     light: `polygon(${rel(A)}, ${rel(B)}, ${rel(toTable(B, aim - 0.35))}, ${rel(toTable(A, aim + 0.35))})`,
   })
 
@@ -221,18 +216,6 @@ const desk: Glyph = (b, el) => {
     [Mx + 34, T - 12],
     [Mx + 3, T - 12],
     [Mx + 3, T],
-    // picture frame, propped up on its stand
-    ...((framed
-      ? [
-          [Fx, T],
-          [Fx, T - 50],
-          [Fx + 40, T - 50],
-          [Fx + 40, T],
-          [Fx + 47, T],
-          [Fx + 40, T - 28],
-          [Fx + 47, T],
-        ]
-      : []) as Pt[]),
     // mug with a handle
     [Gx, T],
     [Gx, T - 20],

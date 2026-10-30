@@ -43,10 +43,7 @@ function hero(site: Site, me: Profile | null) {
   </section>`
 }
 
-function about(site: Site, me: Profile | null) {
-  const portrait = me
-    ? `<img class="desk-portrait" src="/photos/img/${me.files[0].name}" srcset="${profileSrcset(me)}" sizes="40px" alt="Portrait of ${esc(site.name)}" loading="lazy" decoding="async">`
-    : ''
+function about(site: Site) {
   return `
   <section class="stop stop--about" id="about" data-says="this desk is mine.">
     <div class="stop-head">
@@ -63,7 +60,6 @@ function about(site: Site, me: Profile | null) {
         </button>
         <span class="desk-screen" aria-hidden="true">&gt;<i>_</i></span>
         <svg class="desk-steam" viewBox="0 0 20 24" aria-hidden="true"><path d="M6 22c-3-4 3-6 0-10s3-6 0-10M14 22c-3-4 3-6 0-10s3-6 0-10"/></svg>
-        ${portrait}
       </div>
     </div>
   </section>`
@@ -230,7 +226,7 @@ export const VIEWER = `<dialog class="viewer" data-viewer aria-label="Photo">
     </dialog>`
 
 export function renderHome(site: Site, posts: Post[], list: Photo[], me: Profile | null) {
-  return [hero(site, me), about(site, me), writing(posts), projects(site), photos(list), garden(site), elsewhere(site), end(site)].join('\n')
+  return [hero(site, me), about(site), writing(posts), projects(site), photos(list), garden(site), elsewhere(site), end(site)].join('\n')
 }
 
 export function renderPhotos(template: string, site: Site, list: Photo[], me: Profile | null) {

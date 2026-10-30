@@ -11,7 +11,7 @@ npm run build    # static site in dist/
 ## Make it yours
 
 - **`src/content/site.ts`** — name, bio, email, GitHub username, projects (houses) and links (kites).
-- **`content/profile.jpg`** (or `.png`, `.webp`) — your picture: on the desk, beside your name, and in link previews. Cropped square, metadata stripped. Leave it out and the site does without.
+- **`content/profile.jpg`** (or `.png`, `.webp`) — your picture: beside your name and in link previews. Cropped square, metadata stripped. Leave it out and the site does without.
 - **`content/posts/*.md`** — one file per post (books). Front matter: `title`, `date` (YYYY-MM-DD), `description`.
 - **`content/photos/`** — your photos (JPEG, PNG or WebP), hung as frames on the home page and all together at `/photos/`. The build resizes them to WebP and strips their metadata, GPS included. Newest first, by the date the phone stamped on them.
   Give one a caption, or a date of its own, in `content/photos/photos.json`:

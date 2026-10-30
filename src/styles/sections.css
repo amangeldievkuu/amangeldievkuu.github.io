@@ -313,7 +313,7 @@ main {
 }
 
 .desk {
-  --w: 320px;
+  --w: 300px;
   --h: 172px;
   --light: inset(100%);
 
@@ -400,21 +400,6 @@ main {
   & i {
     font-style: normal;
     animation: blink-cursor 1.1s steps(1) infinite;
-  }
-}
-
-.desk-portrait {
-  position: absolute;
-  left: calc(var(--portrait-x, 0px) + 4px);
-  top: calc(var(--portrait-y, 0px) + 4px);
-  width: 32px;
-  height: 42px;
-  object-fit: cover;
-  pointer-events: none;
-
-  /* Wait a beat so the frame is closed first, like the photos on the ledge. */
-  .desk.is-drawn & {
-    transition-delay: 0.4s;
   }
 }
 
