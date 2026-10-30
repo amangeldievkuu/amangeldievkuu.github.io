@@ -12,6 +12,13 @@ npm run build    # static site in dist/
 
 - **`src/content/site.ts`** — name, bio, email, GitHub username, projects (houses) and links (kites).
 - **`content/posts/*.md`** — one file per post (books). Front matter: `title`, `date` (YYYY-MM-DD), `description`.
+- **`content/photos/`** — your photos (JPEG, PNG or WebP), hung as frames on the home page and all together at `/photos/`. The build resizes them to WebP and strips their metadata, GPS included. Newest first, by the date the phone stamped on them.
+  Give one a caption, or a date of its own, in `content/photos/photos.json`:
+  ```json
+  { "IMG_1234.jpg": { "caption": "Issyk-Kul, early morning" } }
+  ```
+  From a phone: open the repo on github.com → `content/photos` → **Add file → Upload files** → commit. The site redeploys on its own.
+  iPhone HEIC files are skipped with a warning; set Settings → Camera → Formats → **Most Compatible** to shoot JPEG, or export as JPEG first.
 
 ## Deploy
 
@@ -30,5 +37,6 @@ Links and assets are root-absolute (`/writing/…`, `/assets/…`), so the site 
 - `src/pot.ts` is the visitor's own plant in the corner: a leaf per section, a bloom at the end, a sprout for every return visit, and the season and time of day on it. Tap the bloom to pick it; hold the pot to water it.
 - `src/flower.ts` grows each visitor's flower from a seed kept in their browser; `src/keepsake.ts` is the card a picked flower lands on, to save as a PNG or give away as a `/?flower=…` link.
   Preview any season with `?season=spring|summer|autumn|winter`.
+- `plugins/photos.ts` turns `content/photos/` into WebP at three sizes (cached in `node_modules/.cache`); `src/viewer.ts` is the full-screen viewer — arrows, swipe, and `/photos/#<id>` links to a single photo.
 - `src/garden.ts` grows plants from the GitHub API (cached for an hour).
 - The desk lamp switches the theme.

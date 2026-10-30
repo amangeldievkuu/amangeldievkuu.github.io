@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>photos — %SITE_NAME%</title>
+    <meta name="description" content="Landscapes and city streets, taken on a phone by %SITE_NAME%." />
+    <meta property="og:title" content="photos — %SITE_NAME%" />
+    <meta property="og:description" content="Landscapes and city streets, taken on a phone by %SITE_NAME%." />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafaf7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121212" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Inter:opsz,wght@14..32,400..600&display=swap" />
+    <script>try{const t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch{}</script>
+    <script type="module" src="/src/photos.ts"></script>
+  </head>
+  <body class="post-page">
+    <header class="top">
+      <a class="mark" href="/" aria-label="%SITE_NAME%, home">%SITE_NAME%<span>.</span></a>
+      <nav aria-label="Back"><a href="/#photos">← back to the ledge</a></nav>
+      <button class="reading-lamp" type="button" data-lamp aria-pressed="false" aria-label="Lamp: switch between light and dark">
+        <svg viewBox="0 0 44 52" aria-hidden="true">
+          <defs>
+            <linearGradient id="lamp-glow" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-opacity="0.55" />
+              <stop offset="1" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <path class="lamp-body" pathLength="1" d="M25 49.5c5-.6 11-.2 16-.4M33.5 49c.6-7 2.4-14.5 4.5-21.6M38 27.4c-5.2-4.6-10.6-9-16.4-13" />
+          <g class="lamp-head">
+            <g transform="translate(14 17) rotate(30)">
+              <path class="lamp-glow" d="M-7 1 7 1 17 27-17 27Z" fill="url(#lamp-glow)" />
+              <path pathLength="1" d="M-8.5 .4C-8.8-8.6 8.4-9.4 8.6.2c-5.6.6-11.4.4-17.1.2" />
+              <circle class="lamp-bulb" data-lamp-origin cx="0" cy="2.6" r="2.6" />
+            </g>
+          </g>
+        </svg>
+      </button>
+    </header>
+
+    <main class="post photos">
+      <p class="post-meta">%COUNT%</p>
+      <h1 class="post-title">photos</h1>
+      <p class="post-desc">Mountains, lakes and streets, taken on my phone. Tap one to see it large.</p>
+      <svg class="post-rule" viewBox="0 0 600 24" preserveAspectRatio="none" aria-hidden="true">
+        <path pathLength="1" d="M2 14C80 12 120 15 190 13s70-9 82-2-8 12-14 4 18-12 40-8c60 6 150 2 290 6" />
+      </svg>
+      <div class="shots">%GRID%</div>
+      <footer class="post-end">
+        <svg viewBox="0 0 220 30" aria-hidden="true"><path pathLength="1" d="M2 20c40-2 70 2 110-1s52-14 60-4-10 12-12 4 30-6 50-4" /><circle cx="214" cy="15" r="3.5" /></svg>
+        <p>that's all for now. <a href="/">back home</a></p>
+      </footer>
+    </main>
+
+    %VIEWER%
+  </body>
+</html>

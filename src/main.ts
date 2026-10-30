@@ -4,6 +4,7 @@ import './styles/sections.css'
 import './styles/line.css'
 import './styles/pot.css'
 import './styles/keepsake.css'
+import './styles/viewer.css'
 import { initCaptions } from './captions.ts'
 import { plantGarden } from './garden.ts'
 import { initGlide } from './glide.ts'
@@ -12,6 +13,7 @@ import { Pen } from './line/pen.ts'
 import { createPot } from './pot.ts'
 import { initSmoothScroll } from './smooth.ts'
 import { initTheme } from './theme.ts'
+import { initViewer } from './viewer.ts'
 import { createWalker } from './walker.ts'
 
 const pen = new Pen(document.querySelector('.ink-line')!, document.querySelector('.ink-end')!)
@@ -36,6 +38,7 @@ initTheme()
 initCaptions()
 initGlide()
 initSmoothScroll()
+initViewer()
 new ResizeObserver(rebuild).observe(document.body)
 document.fonts.ready.then(rebuild)
 addEventListener('scroll', () => pen.kick(), { passive: true })

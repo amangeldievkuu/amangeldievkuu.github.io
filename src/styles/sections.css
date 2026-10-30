@@ -506,6 +506,47 @@ main {
   }
 }
 
+/* ---------- photos: a picture ledge ---------- */
+
+.stage--ledge {
+  --col-gap: 28px;
+  --row-gap: 88px;
+  padding-top: 96px;
+}
+
+/* The line draws the frame; the photo fades in behind its glass once it's there. */
+.frame {
+  & img {
+    position: absolute;
+    inset: 7px 7px 6px;
+    width: calc(100% - 14px);
+    height: calc(100% - 13px);
+    object-fit: cover;
+    opacity: 0;
+    scale: 0.96;
+    transition:
+      opacity 0.9s var(--ease-out),
+      scale 0.9s var(--ease-out),
+      filter 0.3s;
+  }
+
+  /* Marks fire as the line starts a glyph; wait a beat so the frame is closed first. */
+  &.is-drawn img {
+    opacity: 1;
+    scale: 1;
+    transition-delay: 0.4s, 0.4s, 0s;
+  }
+
+  &:is(:hover, :focus-visible) img {
+    filter: brightness(1.06) saturate(1.08);
+  }
+}
+
+/* Hovering one picture quiets the rest. */
+.stage--ledge:has(.frame:is(:hover, :focus-visible)) .frame.is-drawn:not(:hover, :focus-visible) img {
+  filter: opacity(0.45);
+}
+
 /* ---------- github: a garden ---------- */
 
 .status {

@@ -1,4 +1,5 @@
 import type { Site } from '../src/content/site.ts'
+import type { Photo } from './photos.ts'
 import type { Post } from './posts.ts'
 
 // Build-time renderers. The page ships as static HTML; the browser only draws the line over it.
@@ -101,6 +102,43 @@ function projects(site: Site) {
   </section>`
 }
 
+const PHOTOS_ON_SHELF = 5
+
+const photoSrc = (p: Photo) => `/photos/img/${p.files[0].name}`
+const photoSrcset = (p: Photo) => p.files.map((f) => `/photos/img/${f.name} ${f.w}w`).join(', ')
+const photoLabel = (p: Photo) => [p.caption, p.date && fmtDate(p.date, 'long')].filter(Boolean).join(' — ')
+const photoAlt = (p: Photo) => p.caption || (p.date ? `A photo from ${fmtDate(p.date, 'long')}` : 'A photo')
+
+/** The attributes the viewer reads, shared by the ledge and the photos page. */
+const photoData = (p: Photo) =>
+  `data-photo="${esc(p.id)}" data-caption="${esc(photoLabel(p))}" data-w="${p.w}" data-h="${p.h}"`
+
+function photos(list: Photo[]) {
+  const frames = list
+    .slice(0, PHOTOS_ON_SHELF)
+    .map((p) => {
+      const a = p.w / p.h
+      const h = a >= 1 ? 124 : 168
+      const w = Math.round(Math.min(232, h * a))
+      return `<a class="glyph frame" data-glyph="frame" href="/photos/#${esc(p.id)}" ${photoData(p)}
+        style="--w:${w}px;--h:${h}px" aria-label="${esc(photoAlt(p))}">
+        <img src="${photoSrc(p)}" srcset="${photoSrcset(p)}" sizes="${w}px" alt="" loading="lazy" decoding="async"></a>`
+    })
+    .join('')
+  return `
+  <section class="stop stop--photos" id="photos" data-says="what a view.">
+    <div class="stop-head">
+      <h2 class="label">photos</h2>
+      <p class="lede">Mountains, lakes and streets, taken on my phone. Pictures on a ledge — look closer at any.</p>
+    </div>
+    <div class="stage stage--ledge" data-stage data-caption-default="${list.length ? '' : 'no photos yet'}">
+      ${frames}
+      <a class="glyph sign" data-glyph="sign" href="/photos/" aria-label="All ${list.length} photos"><span>all photos →</span></a>
+      <p class="caption" aria-hidden="true"></p>
+    </div>
+  </section>`
+}
+
 function garden(site: Site) {
   const seeds = Array.from({ length: 7 }, () => `<span class="glyph plant is-seed" data-glyph="plant"></span>`).join('')
   const profile = `https://github.com/${encodeURIComponent(site.githubUser)}`
@@ -164,8 +202,39 @@ function end(site: Site) {
   </section>`
 }
 
-export function renderHome(site: Site, posts: Post[]) {
-  return [hero(site), about(site), writing(posts), projects(site), garden(site), elsewhere(site), end(site)].join('\n')
+/** The full-screen viewer, on every page that shows photos. src/viewer.ts brings it to life. */
+export const VIEWER = `<dialog class="viewer" data-viewer aria-label="Photo">
+      <figure class="viewer-shot">
+        <img class="viewer-img" alt="" decoding="async" sizes="100vw">
+        <figcaption><span class="viewer-caption"></span><span class="viewer-count"></span></figcaption>
+      </figure>
+      <button class="viewer-step viewer-prev" type="button" data-prev aria-label="Previous photo">←</button>
+      <button class="viewer-step viewer-next" type="button" data-next aria-label="Next photo">→</button>
+      <form method="dialog"><button class="viewer-close" aria-label="Close">&times;</button></form>
+    </dialog>`
+
+export function renderHome(site: Site, posts: Post[], list: Photo[]) {
+  return [hero(site), about(site), writing(posts), projects(site), photos(list), garden(site), elsewhere(site), end(site)].join('\n')
+}
+
+export function renderPhotos(template: string, site: Site, list: Photo[]) {
+  const grid = list
+    .map(
+      (p) => `<figure class="shot" style="--a:${(p.w / p.h).toFixed(4)}">
+        <a href="#${esc(p.id)}" id="${esc(p.id)}" ${photoData(p)} aria-label="${esc(photoAlt(p))}">
+          <img src="${photoSrc(p)}" srcset="${photoSrcset(p)}" sizes="(max-width: 640px) 100vw, 50vw" width="${p.w}" height="${p.h}" alt="${esc(photoAlt(p))}" loading="lazy" decoding="async">
+        </a>
+        ${photoLabel(p) ? `<figcaption>${esc(photoLabel(p))}</figcaption>` : ''}
+      </figure>`,
+    )
+    .join('')
+  const vars: Record<string, string> = {
+    '%SITE_NAME%': esc(site.name),
+    '%COUNT%': list.length === 1 ? '1 photo' : `${list.length} photos`,
+    '%VIEWER%': VIEWER,
+    '%GRID%': grid || '<p class="shots-empty">No photos yet. Drop some into content/photos/.</p>',
+  }
+  return template.replace(/%[A-Z_]+%/g, (k) => vars[k] ?? k)
 }
 
 export function renderPost(template: string, site: Site, post: Post) {

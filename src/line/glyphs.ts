@@ -36,6 +36,23 @@ const book: Glyph = ({ x, g, w, h }) => [
   [x + w - 1, g],
 ]
 
+/** A picture on the ledge, hung from a nail by a wire. */
+const frame: Glyph = ({ x, g, w, h }, _el, rand) => {
+  const top = g - h
+  const cx = x + w / 2 + (rand() - 0.5) * w * 0.1
+  const nail = top - 14 - rand() * 6
+  return [
+    [x + 1, g],
+    [x + 1, top],
+    [x + w * 0.24, top],
+    [cx, nail],
+    ...arc(cx, nail - 2.2, 2.2, Math.PI / 2, Math.PI / 2 + TAU),
+    [x + w * 0.76, top],
+    [x + w - 1, top],
+    [x + w - 1, g],
+  ]
+}
+
 const house: Glyph = (b, el, rand) => {
   const { x, g, w, h } = b
   const top = g - Math.round(h * 0.6)
@@ -238,4 +255,4 @@ const mailbox: Glyph = (b, el) => {
   ]
 }
 
-export const glyphs: Record<string, Glyph> = { flourish, book, house, plant, sign, kite, desk, mailbox }
+export const glyphs: Record<string, Glyph> = { flourish, book, frame, house, plant, sign, kite, desk, mailbox }
