@@ -119,7 +119,7 @@ main {
   left: 0;
   z-index: 3;
   width: max-content;
-  max-width: min(34ch, 80vw);
+  max-width: min(34ch, 100%);
   font: italic 400 1.2rem / 1.2 var(--serif);
   pointer-events: none;
   transition: opacity 0.25s;
@@ -130,11 +130,13 @@ main {
 }
 
 @supports (anchor-name: --a) {
+  /* Centred over the glyph, but pushed back inside the stage near its edges. */
   .caption.is-anchored {
     top: auto;
-    left: anchor(center);
-    bottom: calc(anchor(top) + 16px);
-    translate: -50% 0;
+    left: auto;
+    position-area: top span-all;
+    justify-self: anchor-center;
+    margin-bottom: 16px;
     text-align: center;
   }
 }

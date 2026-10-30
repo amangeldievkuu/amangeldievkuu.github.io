@@ -9,6 +9,8 @@
 }
 
 html {
+  /* Nothing may widen the page: with this on html, the body's own clip really clips. */
+  overflow-x: clip;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
   scroll-padding-top: 12vh;
@@ -103,9 +105,10 @@ svg {
   position: relative;
   z-index: 2;
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 24px;
+  gap: 10px 24px;
   width: min(var(--measure), 100% - 2 * var(--gutter));
   margin-inline: auto;
   padding-block: 28px;
@@ -117,7 +120,8 @@ svg {
 
   & nav {
     display: flex;
-    gap: clamp(14px, 3vw, 32px);
+    flex-wrap: wrap;
+    gap: 4px clamp(12px, 3vw, 32px);
     font-size: var(--step--1);
     letter-spacing: 0.02em;
     color: var(--ink-2);

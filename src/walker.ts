@@ -45,8 +45,11 @@ export function createWalker(root: HTMLElement, home: () => Seat | null = () => 
   let pen: Pen | null = null
   // Where it sits by the pot, in viewport coordinates, while it's there.
   let potted: Seat | null = null
+  // Measured on resize, not every frame: reading it after a write would force a layout.
+  let width = document.documentElement.clientWidth
 
   const say = (text: string | undefined) => {
+    if (says.textContent === (text ?? '') && root.classList.contains('is-talking') === !!text) return
     says.textContent = text ?? ''
     root.classList.toggle('is-talking', !!text)
   }
@@ -146,6 +149,7 @@ export function createWalker(root: HTMLElement, home: () => Seat | null = () => 
   }
 
   addEventListener('resize', () => {
+    width = document.documentElement.clientWidth
     const seat = potted && home()
     if (!seat) return
     potted = seat
@@ -192,7 +196,6 @@ export function createWalker(root: HTMLElement, home: () => Seat | null = () => 
     // On narrow screens the margins are too thin to stand on the outside of the line, so
     // hang on the inside instead: turned half round and mirrored, it still faces its way.
     let mirrored = facingLeft
-    const width = document.documentElement.clientWidth
     const headX = x + Math.sin(heading) * HEIGHT
     if (headX < 0 || headX > width) {
       heading += Math.PI
