@@ -145,10 +145,16 @@
   }
 
   & .walker-blob {
-    transform-box: fill-box;
-    transform-origin: 50% 100%;
+    rotate: -28deg;
     animation: breathe 3.2s ease-in-out infinite;
   }
+}
+
+/* Leaning back onto the pillow, or forward for a sip, it tips from its bottom. */
+.walker-blob {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: rotate 0.9s var(--ease-out);
 }
 
 /* Its laptop: tucked away until it sits a while. The paper halo round the lid keeps it from
@@ -167,6 +173,7 @@
     scale 0.4s var(--ease-spring);
 
   .walker.is-coding &,
+  .walker.is-sipping &,
   .walker.is-sleeping & {
     opacity: 1;
     scale: 1;
@@ -225,15 +232,103 @@
   }
 
   & .walker-blob {
-    transform-box: fill-box;
-    transform-origin: 50% 100%;
     animation: typing 0.26s ease-in-out infinite alternate;
   }
 }
 
-/* Asleep, the lid comes down. */
+/* Tea time and bedtime: the lid comes down. */
+.walker.is-sipping .walker-laptop-lid,
 .walker.is-sleeping .walker-laptop-lid {
   scale: 1 0.12;
+}
+
+/* A mug of tea on the shut laptop, steaming while it's hot, and a lean in for a sip now and then. */
+.walker-mug,
+.walker-pillow {
+  opacity: 0;
+  scale: 0.5;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition:
+    opacity 0.25s,
+    scale 0.4s var(--ease-spring);
+}
+
+.walker.is-sipping .walker-mug,
+.walker.is-sleeping .walker-mug,
+.walker.is-sleeping .walker-pillow {
+  opacity: 1;
+  scale: 1;
+}
+
+.walker.is-sipping .walker-mug {
+  transition-delay: 0.3s;
+}
+
+.walker-mug-cup {
+  fill: currentColor;
+  stroke: var(--paper);
+  stroke-width: 2;
+  paint-order: stroke;
+}
+
+.walker-mug-handle,
+.walker-mug-steam {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+}
+
+.walker-mug-handle {
+  stroke-width: 1.1;
+}
+
+.walker-mug-steam {
+  stroke-width: 0.9;
+  opacity: 0;
+
+  .walker.is-sipping & {
+    animation: steam-up 2s ease-out infinite;
+  }
+}
+
+.walker.is-sipping .walker-blob {
+  animation: sip 3.4s ease-in-out 0.8s infinite;
+}
+
+/* The pillow sits behind its head, soft paper with an ink edge. */
+.walker-pillow {
+  fill: var(--paper);
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  transform-origin: 50% 50%;
+}
+
+@keyframes sip {
+  0%,
+  55%,
+  100% {
+    rotate: 0deg;
+  }
+  20%,
+  40% {
+    rotate: 10deg;
+  }
+}
+
+@keyframes steam-up {
+  0% {
+    opacity: 0;
+    translate: 0 1px;
+  }
+  30% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    translate: 0 -2px;
+  }
 }
 
 @keyframes type-line {
@@ -390,6 +485,9 @@
   .walker-body svg,
   .walker-laptop,
   .walker-laptop-lid,
+  .walker-blob,
+  .walker-mug,
+  .walker-pillow,
   .leg {
     transition: none;
   }
@@ -400,6 +498,7 @@
   .walker.is-sniffing .walker-blob,
   .walker-z,
   .walker-laptop-code,
+  .walker-mug-steam,
   .walker-body.is-hopping svg,
   .desk-steam {
     animation: none !important;
@@ -411,5 +510,9 @@
 
   .walker.is-coding .walker-laptop-code {
     stroke-dashoffset: 0;
+  }
+
+  .walker.is-sipping .walker-mug-steam {
+    opacity: 0.6;
   }
 }

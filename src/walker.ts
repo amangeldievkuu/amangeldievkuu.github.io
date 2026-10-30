@@ -4,12 +4,13 @@ import type { Seat } from './pot.ts'
 // A small ink creature that lives on the pen tip. It walks wherever the line goes — up book
 // spines, over roofs, down the margins — faces the way it's moving, and sits down to say
 // something when you stop scrolling. Left alone a while, it opens a little laptop and gets some
-// coding done; left alone longer, it shuts the lid and dozes off. At the end of the
+// coding done, then shuts the lid for a cup of tea, and finally dozes off on a pillow. At the end of the
 // line there's nowhere left to walk, so it hops over to the corner pot to smell the flower.
 
 const SIT_AFTER = 1400
 const CODE_AFTER = 6000
-const SLEEP_AFTER = 15000
+const TEA_AFTER = 22000
+const SLEEP_AFTER = 30000
 const VISIT_AFTER = 2600
 // How far the walker's head reaches from its feet (see .walker-body).
 const HEIGHT = 32
@@ -41,8 +42,8 @@ export function createWalker(root: HTMLElement, home: () => Seat | null = () => 
   let lastTip = -1
   let dir = 1
   let sitTimer = 0
-  let codeTimer = 0
-  let sleepTimer = 0
+  // The winding-down routine: coding, tea, then sleep.
+  let bedtime: number[] = []
   let visitTimer = 0
   let taps = 0
   let pen: Pen | null = null
@@ -66,15 +67,20 @@ export function createWalker(root: HTMLElement, home: () => Seat | null = () => 
     if (pen && pen.tip >= pen.line.total - 1) visitTimer = window.setTimeout(visit, VISIT_AFTER)
   }
 
-  // Out comes the laptop (see .walker-laptop); it types away until it's time to sleep.
+  // Out comes the laptop (see .walker-laptop); it types away for a good while.
   const code = () => {
     say(undefined)
     root.classList.add('is-coding')
   }
 
+  // The lid comes down and a mug of tea goes on top, sipped now and then.
+  const tea = () => {
+    root.classList.replace('is-coding', 'is-sipping')
+  }
+
   const sleep = () => {
-    // The laptop stays out, lid shut.
-    root.classList.remove('is-coding')
+    // Laptop and mug stay put; a pillow appears and it leans back onto it.
+    root.classList.remove('is-coding', 'is-sipping')
     root.classList.add('is-sleeping')
     // Three z's, each drifting up and away in turn (see .walker-z).
     says.replaceChildren(
@@ -84,15 +90,17 @@ export function createWalker(root: HTMLElement, home: () => Seat | null = () => 
   }
 
   const wake = () => {
-    clearTimeout(codeTimer)
-    clearTimeout(sleepTimer)
-    root.classList.remove('is-coding', 'is-sleeping')
+    bedtime.forEach(clearTimeout)
+    root.classList.remove('is-coding', 'is-sipping', 'is-sleeping')
   }
 
   const doze = () => {
     wake()
-    codeTimer = window.setTimeout(code, CODE_AFTER)
-    sleepTimer = window.setTimeout(sleep, SLEEP_AFTER)
+    bedtime = [
+      window.setTimeout(code, CODE_AFTER),
+      window.setTimeout(tea, TEA_AFTER),
+      window.setTimeout(sleep, SLEEP_AFTER),
+    ]
   }
 
   const steer = (now: number) => {
