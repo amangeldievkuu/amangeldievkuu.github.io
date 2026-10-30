@@ -69,7 +69,7 @@ export function createPot(root: HTMLElement, hooks: { pick: (p: Picked) => void;
   const bloomEl = root.querySelector<SVGGElement>('.pot-bloom')!
   const leaves = [...root.querySelectorAll<SVGElement>('.pot-leaf')]
   const sprouts = [...root.querySelectorAll<SVGElement>('.pot-sprout')]
-  const count = root.querySelector<HTMLElement>('.pot-count')!
+  const count = root.querySelector<HTMLElement>('.pot-count > span')!
 
   const mem = remember()
   const fresh = mem.began === mem.seen
@@ -309,7 +309,7 @@ export function createPot(root: HTMLElement, hooks: { pick: (p: Picked) => void;
           : flower.petals === 5
             ? 'mmm. plum.'
             : 'mmm.'
-    return { x: a.left - 30, y: label.bottom, says }
+    return { x: Math.min(a.left, label.left) - 30, y: label.bottom, says }
   }
 
   return { update, seat }

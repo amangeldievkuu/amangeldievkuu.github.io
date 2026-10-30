@@ -394,14 +394,22 @@
   }
 }
 
-/* Centred under the pot without widening it, so the plant never shifts as the label changes. */
+/* Centred under the pot without widening it, so the plant never shifts as the label changes.
+   A label wider than the pot ends at its right edge and grows left, never off the screen. */
 .pot-count {
   display: flex;
-  justify-content: center;
-  width: 0;
+  justify-self: stretch;
+  justify-content: safe center;
+  direction: rtl;
+  contain: inline-size;
   font: 400 11px / 1 var(--mono);
   color: var(--ink-3);
   white-space: nowrap;
+
+  & span {
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
 }
 
 @media (max-width: 600px) {

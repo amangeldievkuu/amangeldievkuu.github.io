@@ -77,9 +77,9 @@ export function nameOf(f: Flower) {
   if (f.tulip) return { name: 'жоогазын', say: 'joogazyn', what: 'tulip', more: 'tulip, from the Tian Shan' }
   if (f.petals === 5) {
     const what = f.double ? 'double plum blossom' : 'plum blossom'
-    return { name: '梅花', say: 'ㄇㄟˊ ㄏㄨㄚ', what, more: what }
+    return { name: 'кара өрүк гүлү', say: 'kara örük gülü', what, more: what }
   }
-  return { name: '野花', say: 'ㄧㄝˇ ㄏㄨㄚ', what: 'wildflower', more: `wildflower, ${f.petals} petals` }
+  return { name: 'талаа гүлү', say: 'talaa gülü', what: 'wildflower', more: `wildflower, ${f.petals} petals` }
 }
 
 function bezier(p0: Pt, p1: Pt, p2: Pt, p3: Pt, n: number): Pt[] {
