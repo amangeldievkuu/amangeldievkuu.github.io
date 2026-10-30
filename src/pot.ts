@@ -113,11 +113,11 @@ export function createPot(root: HTMLElement, hooks: { pick: (p: Picked) => void;
     button.setAttribute(
       'aria-label',
       gift
-        ? `A gift: a ${name.what}. Press to open it.`
+        ? `A gift: a ${name.name}. Press to open it.`
         : full
           ? pickedNow()
-            ? `Your plant. You picked its ${name.what}; another grows next visit. Hold to water.`
-            : `Your plant is in bloom: a ${name.what}. Press to pick it, hold to water.`
+            ? `Your plant. You picked its ${name.name}; another grows next visit. Hold to water.`
+            : `Your plant is in bloom: a ${name.name}. Press to pick it, hold to water.`
           : `Your plant, ${reached + 1} of ${starts.length} sections grown. Hold to water.`,
     )
   }

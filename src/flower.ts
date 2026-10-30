@@ -72,14 +72,10 @@ export function decode(code: string | null): Flower | null {
   }
 }
 
-/** What it's called, how to say it, what it is, and a little more about it for the card. */
+/** What it's called, and a little more about it for the card. */
 export function nameOf(f: Flower) {
-  if (f.tulip) return { name: 'жоогазын', say: 'joogazyn', what: 'tulip', more: 'tulip, from the Tian Shan' }
-  if (f.petals === 5) {
-    const what = f.double ? 'double plum blossom' : 'plum blossom'
-    return { name: 'кара өрүк гүлү', say: 'kara örük gülü', what, more: what }
-  }
-  return { name: 'талаа гүлү', say: 'talaa gülü', what: 'wildflower', more: `wildflower, ${f.petals} petals` }
+  if (f.tulip) return { name: 'tulip', more: 'from the Tian Shan' }
+  return { name: f.petals !== 5 ? 'wildflower' : f.double ? 'double plum blossom' : 'plum blossom', more: `${f.petals} petals` }
 }
 
 function bezier(p0: Pt, p1: Pt, p2: Pt, p3: Pt, n: number): Pt[] {

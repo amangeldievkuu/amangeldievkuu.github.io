@@ -41,7 +41,7 @@ export function createKeepsake(dialog: HTMLDialogElement) {
     shown = {
       flower,
       drawing,
-      lines: [n.name, `${n.say} · ${n.more}`, visit ? `grown on ${site}'s site · ${when} · visit ${visit}` : `a gift · grown on ${site}'s site · ${when}`],
+      lines: [n.name, n.more, visit ? `grown on ${site}'s site · ${when} · visit ${visit}` : `a gift · grown on ${site}'s site · ${when}`],
     }
 
     stroke.setAttribute('d', drawing.d)
@@ -139,7 +139,7 @@ export function createKeepsake(dialog: HTMLDialogElement) {
     const url = `${location.origin}/?flower=${encode(shown.flower)}`
     if (coarse.matches && navigator.share) {
       try {
-        await navigator.share({ title: 'a flower for you', text: `I grew this ${nameOf(shown.flower).what} on ${site}'s site. It's yours.`, url })
+        await navigator.share({ title: 'a flower for you', text: `I grew this ${nameOf(shown.flower).name} on ${site}'s site. It's yours.`, url })
         return say('sent.')
       } catch (err) {
         if ((err as Error).name === 'AbortError') return
