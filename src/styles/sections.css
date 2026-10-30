@@ -70,7 +70,7 @@ main {
       animation-range: entry 25% entry 95%;
     }
 
-    .hero-name {
+    .hero-title {
       animation: drift linear both;
       animation-timeline: scroll(root);
       animation-range: 0 90vh;
@@ -148,6 +148,35 @@ main {
   flex-direction: column;
   min-height: calc(100svh - 96px);
   padding-top: clamp(40px, 11vh, 140px);
+}
+
+.hero-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px clamp(16px, 3vw, 36px);
+}
+
+.hero-avatar {
+  width: clamp(64px, 11vw, 132px);
+  aspect-ratio: 1;
+  border: var(--stroke) solid var(--ink);
+  border-radius: 50%;
+  padding: 4px;
+  background: var(--paper);
+  object-fit: cover;
+
+  /* Comes in as the dot lands. */
+  @media (prefers-reduced-motion: no-preference) {
+    animation: appear 0.9s 1.2s var(--ease-out) both;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    scale: 0.85;
+  }
 }
 
 .hero-name {
@@ -284,7 +313,7 @@ main {
 }
 
 .desk {
-  --w: 300px;
+  --w: 320px;
   --h: 172px;
   --light: inset(100%);
 
@@ -371,6 +400,21 @@ main {
   & i {
     font-style: normal;
     animation: blink-cursor 1.1s steps(1) infinite;
+  }
+}
+
+.desk-portrait {
+  position: absolute;
+  left: calc(var(--portrait-x, 0px) + 4px);
+  top: calc(var(--portrait-y, 0px) + 4px);
+  width: 32px;
+  height: 42px;
+  object-fit: cover;
+  pointer-events: none;
+
+  /* Wait a beat so the frame is closed first, like the photos on the ledge. */
+  .desk.is-drawn & {
+    transition-delay: 0.4s;
   }
 }
 

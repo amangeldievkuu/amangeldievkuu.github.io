@@ -17,6 +17,8 @@ export const site = {
   tagline: 'builds quiet software.',
   subline: 'Engineer, occasional writer, collector of small useful ideas.',
   description: 'Personal site of Kutman: writing, projects and a small garden of code.',
+  // Where the site lives, for absolute links such as the link-preview image.
+  url: 'https://amangeldievkuu.github.io',
 
   bio: [
     'I like software that disappears into the work — fast, calm, and a little bit kind.',

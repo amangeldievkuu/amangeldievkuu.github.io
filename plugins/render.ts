@@ -1,5 +1,5 @@
 import type { Site } from '../src/content/site.ts'
-import type { Photo } from './photos.ts'
+import type { Photo, Profile } from './photos.ts'
 import type { Post } from './posts.ts'
 
 // Build-time renderers. The page ships as static HTML; the browser only draws the line over it.
@@ -15,10 +15,22 @@ const pick = <T,>(list: T[], i: number) => list[i % list.length]
 
 export const bookName = (slug: string) => `book-${slug}`
 
-function hero(site: Site) {
+const profileSrcset = (me: Profile) => me.files.map((f) => `/photos/img/${f.name} ${f.w}w`).join(', ')
+
+/** The link-preview image, for every page's <head>. */
+export const ogMeta = (site: Site, me: Profile | null) =>
+  me ? `<meta property="og:image" content="${esc(site.url)}/photos/img/${me.og}" />\n    <meta name="twitter:card" content="summary" />` : ''
+
+function hero(site: Site, me: Profile | null) {
+  const avatar = me
+    ? `<img class="hero-avatar" src="/photos/img/${me.files[0].name}" srcset="${profileSrcset(me)}" sizes="132px" alt="" decoding="async">`
+    : ''
   return `
   <section class="stop stop--hero" id="top" data-says="hi.">
-    <h1 class="hero-name">${esc(site.name)}<span class="hero-dot">.</span></h1>
+    <div class="hero-title">
+      <h1 class="hero-name">${esc(site.name)}<span class="hero-dot">.</span></h1>
+      ${avatar}
+    </div>
     <p class="hero-tag">${esc(site.tagline)}</p>
     <p class="hero-sub">${esc(site.subline)}</p>
     <div class="stage stage--hero" data-stage>
@@ -31,7 +43,10 @@ function hero(site: Site) {
   </section>`
 }
 
-function about(site: Site) {
+function about(site: Site, me: Profile | null) {
+  const portrait = me
+    ? `<img class="desk-portrait" src="/photos/img/${me.files[0].name}" srcset="${profileSrcset(me)}" sizes="40px" alt="Portrait of ${esc(site.name)}" loading="lazy" decoding="async">`
+    : ''
   return `
   <section class="stop stop--about" id="about" data-says="this desk is mine.">
     <div class="stop-head">
@@ -48,6 +63,7 @@ function about(site: Site) {
         </button>
         <span class="desk-screen" aria-hidden="true">&gt;<i>_</i></span>
         <svg class="desk-steam" viewBox="0 0 20 24" aria-hidden="true"><path d="M6 22c-3-4 3-6 0-10s3-6 0-10M14 22c-3-4 3-6 0-10s3-6 0-10"/></svg>
+        ${portrait}
       </div>
     </div>
   </section>`
@@ -213,11 +229,11 @@ export const VIEWER = `<dialog class="viewer" data-viewer aria-label="Photo">
       <form method="dialog"><button class="viewer-close" aria-label="Close">&times;</button></form>
     </dialog>`
 
-export function renderHome(site: Site, posts: Post[], list: Photo[]) {
-  return [hero(site), about(site), writing(posts), projects(site), photos(list), garden(site), elsewhere(site), end(site)].join('\n')
+export function renderHome(site: Site, posts: Post[], list: Photo[], me: Profile | null) {
+  return [hero(site, me), about(site, me), writing(posts), projects(site), photos(list), garden(site), elsewhere(site), end(site)].join('\n')
 }
 
-export function renderPhotos(template: string, site: Site, list: Photo[]) {
+export function renderPhotos(template: string, site: Site, list: Photo[], me: Profile | null) {
   const grid = list
     .map(
       (p) => `<figure class="shot" style="--a:${(p.w / p.h).toFixed(4)}">
@@ -232,12 +248,13 @@ export function renderPhotos(template: string, site: Site, list: Photo[]) {
     '%SITE_NAME%': esc(site.name),
     '%COUNT%': list.length === 1 ? '1 photo' : `${list.length} photos`,
     '%VIEWER%': VIEWER,
+    '%OG%': ogMeta(site, me),
     '%GRID%': grid || '<p class="shots-empty">No photos yet. Drop some into content/photos/.</p>',
   }
   return template.replace(/%[A-Z_]+%/g, (k) => vars[k] ?? k)
 }
 
-export function renderPost(template: string, site: Site, post: Post) {
+export function renderPost(template: string, site: Site, post: Post, me: Profile | null) {
   const vars: Record<string, string> = {
     '%SITE_NAME%': esc(site.name),
     '%TITLE%': esc(post.title),
@@ -247,6 +264,7 @@ export function renderPost(template: string, site: Site, post: Post) {
     '%MINUTES%': String(post.minutes),
     '%VT_NAME%': bookName(post.slug),
     '%CONTENT%': post.html,
+    '%OG%': ogMeta(site, me),
   }
   return template.replace(/%[A-Z_]+%/g, (k) => vars[k] ?? k)
 }
