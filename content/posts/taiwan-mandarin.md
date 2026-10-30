@@ -6,7 +6,7 @@ description: Building 臺灣華語, a study app that follows the TOCFL path, and
 
 I'm learning Mandarin, and the Mandarin I need is Taiwan's: Traditional characters, Zhuyin, Taiwan vocabulary and Taiwan readings. Most study apps treat that as a setting. You switch the characters to Traditional and the rest stays Mainland: 地鐵 instead of 捷運, 垃圾 read *lājī* instead of *lèsè*.
 
-So I built [臺灣華語](https://github.com/amangeldievkuu/taiwan-mandarin), an app that teaches Taiwan Mandarin and nothing else.
+So I built [臺灣華語](https://mandarin.donothing.life), an app that teaches Taiwan Mandarin and nothing else.
 
 ## Following the official path
 

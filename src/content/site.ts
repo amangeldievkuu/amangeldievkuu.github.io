@@ -37,7 +37,7 @@ export const site = {
     {
       name: 'taiwan-mandarin',
       blurb: 'Learn Taiwan Mandarin from TOCFL Novice 1 to Level 6: spaced repetition, Zhuyin, graded reading. Works offline.',
-      href: 'https://github.com/amangeldievkuu/taiwan-mandarin',
+      href: 'https://mandarin.donothing.life',
     },
     {
       name: 'llmproxy-go',
