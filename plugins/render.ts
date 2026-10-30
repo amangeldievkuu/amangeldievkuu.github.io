@@ -111,7 +111,7 @@ const photoAlt = (p: Photo) => p.caption || (p.date ? `A photo from ${fmtDate(p.
 
 /** The attributes the viewer reads, shared by the ledge and the photos page. */
 const photoData = (p: Photo) =>
-  `data-photo="${esc(p.id)}" data-caption="${esc(photoLabel(p))}" data-w="${p.w}" data-h="${p.h}"`
+  `data-photo="${esc(p.id)}" data-caption="${esc(photoLabel(p))}" data-w="${p.w}" data-h="${p.h}" data-full="/photos/img/${p.files.at(-1)!.name}"`
 
 function photos(list: Photo[]) {
   const frames = list

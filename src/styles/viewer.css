@@ -9,6 +9,8 @@
   color: var(--ink);
   background: none;
   border: 0;
+  overflow: hidden;
+  touch-action: none;
   opacity: 0;
   transition:
     opacity 0.4s var(--ease-out),
@@ -31,10 +33,13 @@
 }
 
 .viewer-shot {
+  /* Everything around the photo: top bar, caption, gaps, frame. */
+  --chrome: 140px;
   display: grid;
-  place-content: center;
-  justify-items: center;
+  grid-template-rows: minmax(0, 1fr) auto;
+  place-items: center;
   gap: 14px;
+  width: 100%;
   min-height: 0;
   padding: 56px clamp(16px, 7vw, 96px) 24px;
 
@@ -45,22 +50,40 @@
     max-width: 100%;
     font: italic 400 1.15rem / 1.3 var(--serif);
     text-align: center;
+    transition: opacity 0.2s;
   }
 }
 
+/* As wide as the screen lets it be, unless that would make it too tall. */
 .viewer-img {
-  width: auto;
+  width: min(100%, (100dvh - var(--chrome)) * var(--ar, 1.5));
   height: auto;
-  max-width: 100%;
-  max-height: calc(100dvh - 140px);
   background: var(--wash) center / cover no-repeat;
   border: 1.5px solid var(--ink);
   padding: 6px;
   background-origin: content-box;
   background-clip: content-box;
-  touch-action: pan-y;
+  transform-origin: 0 0;
+  cursor: zoom-in;
   user-select: none;
   -webkit-user-drag: none;
+
+  .viewer.is-zoomed & {
+    cursor: grab;
+  }
+
+  .viewer.is-dragging & {
+    cursor: grabbing;
+  }
+
+  .viewer.is-gliding & {
+    transition: transform 0.3s var(--ease-out);
+  }
+}
+
+/* Zoomed in, the photo has the screen; the caption steps aside. */
+.viewer.is-zoomed figcaption {
+  opacity: 0;
 }
 
 .viewer-count {
@@ -122,11 +145,18 @@
     translate: none;
   }
 
+  /* Edge to edge: no side margin, no frame. */
   .viewer-shot {
-    padding-bottom: 72px;
+    --chrome: 180px;
+    padding: 56px 0 72px;
+
+    & figcaption {
+      padding: 0 16px;
+    }
   }
 
   .viewer-img {
-    max-height: calc(100dvh - 190px);
+    border: 0;
+    padding: 0;
   }
 }

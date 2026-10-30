@@ -16,7 +16,7 @@ export interface Photo {
   files: { w: number; name: string }[]
 }
 
-const WIDTHS = [640, 1280, 2048]
+const WIDTHS = [640, 1280, 2048, 3072]
 const FORMATS = /\.(jpe?g|png|webp)$/i
 const QUALITY = 80
 
